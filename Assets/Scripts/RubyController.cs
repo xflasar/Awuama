@@ -1,13 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class RubyController : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
+    public InputAction _playerControls;
     private Rigidbody2D rb;
+
+    private void OnEnable() {
+        _playerControls.Enable();    
+    }
+
+    private void OnDisable() {
+        _playerControls.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +30,7 @@ public class RubyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector2 movement = new Vector2(horizontalInput, verticalInput) * moveSpeed * Time.deltaTime;
-        rb.MovePosition(rb.position + movement);
+        rb.MovePosition(rb.position + _playerControls.ReadValue<Vector2>() * moveSpeed * Time.deltaTime);
+        //Debug.Log(horizontal)
     }
 }
