@@ -63,7 +63,16 @@ public class GridObjectPlacement : MonoBehaviour
         if(Mouse.current.leftButton.wasPressedThisFrame){
             if(tilemap.HasTile(cellPosition)){
                 Debug.Log("Tile is there");
-                GameObject objectToPlace = Instantiate(selectedSlot.itemPrefab, cellPosition+ new Vector3(0.5f, 0.5f, 0), Quaternion.identity) as GameObject;
+                if(selectedSlot != null){
+                    if(selectedSlot.itemAmount > 0){
+                        GameObject objectToPlace = Instantiate(selectedSlot.itemPrefab, cellPosition+ new Vector3(0.5f, 0.5f, 0), Quaternion.identity) as GameObject;
+                        selectedSlot.itemAmount--;
+                        if(selectedSlot.itemAmount == 0){
+                            UnassignItemFromSlot(selectedSlot.slotIndex);
+                            selectedSlot = null;
+                        }
+                    }
+                }
             } else {
                 Debug.Log("Tile is not there");
             }
@@ -82,6 +91,11 @@ public class GridObjectPlacement : MonoBehaviour
         slots[slotIndex].itemName = item.itemName;
         slots[slotIndex].itemPrefab = item.itemPrefab;
         slots[slotIndex].itemSprite = item.itemSprite;
+    }
+
+    public void UnassignItemFromSlot(int slotIndex) {
+        buttons[slotIndex].GetComponent<Image>().sprite = Resources.Load<Sprite>("Other/UI/ObjectSelectionItem");
+        slots[slotIndex] = new Slot(slotIndex);
     }
 
     private void CreateRectangle(){

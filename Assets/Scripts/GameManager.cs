@@ -65,9 +65,11 @@ public class GameManager : MonoBehaviour
           }
         }
         if(hits.Length == 0) {
-          selectedPlot?.GetComponent<Plot>()._plotUI.SetActive(false);
-          selectedPlot = null;
+          if(selectedPlot.gameObject){
+            selectedPlot?.GetComponent<Plot>()._plotUI.SetActive(false);
+          }
           EventSystem.current.SetSelectedGameObject(null);
+          selectedPlot = null;
         }
       }
     }
