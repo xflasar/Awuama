@@ -42,6 +42,9 @@ public class GameManager : MonoBehaviour
         return gameTimer;
     }
 
+
+    // TODO:
+    // - Fix problem of UnassignedReferenceException: The variable selectedPlot of GameManager has not been assigned.
     private void CheckForPlotSelected() {
       if (Mouse.current.leftButton.wasPressedThisFrame && !cropSelectionUI.isShowing) {
         Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());

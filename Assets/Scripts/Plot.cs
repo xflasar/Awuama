@@ -76,4 +76,8 @@ public class Plot : MonoBehaviour
       _InventoryManager.GetComponent<InventoryManager>().RemoveWater(amount);
       _waterAmount += amount;
     }
+
+    public void RemovePlot() {
+      Destroy(gameObject);
+    }
 }
